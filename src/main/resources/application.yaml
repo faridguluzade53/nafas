@@ -1,6 +1,9 @@
 spring:
   application:
     name: nafas
+  mvc:
+    problemdetails:
+      enabled: true
   datasource:
     url: jdbc:postgresql://localhost:5432/nafas
     username: nafas

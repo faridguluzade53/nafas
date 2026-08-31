@@ -1,3 +1,13 @@
 spring:
   application:
     name: nafas
+  datasource:
+    url: jdbc:postgresql://localhost:5432/nafas
+    username: nafas
+    password: nafas
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true

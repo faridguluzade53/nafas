@@ -1,0 +1,14 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg17
+    container_name: nafas-timescaledb
+    environment:
+      POSTGRES_DB: nafas
+      POSTGRES_USER: nafas
+      POSTGRES_PASSWORD: nafas
+    ports:
+      - "5432:5432"
+    volumes:
+      - nafas-pgdata:/var/lib/postgresql/data
+volumes:
+  nafas-pgdata:

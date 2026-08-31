@@ -1,79 +1,56 @@
 # Nafas — Progress
 
-Tracking against java-spring-roadmap.md. Update at the end of every session (Rule 3).
+Build checklist for the platform itself. No phases, no gates — just what's actually 
+built and verified, updated after each session.
 
-## Status legend
-- Not started
-- In progress
-- Gate passed
+## Foundation
+- [x] Spring Boot app scaffold (Java 21, Spring Boot 4.1.1, Maven)
+- [x] Health check endpoint (GET /api/health)
+- [x] PostgreSQL/TimescaleDB running locally via Docker Compose
+- [x] First hypertable (sensor_reading) + JPA entity/repository, verified via Testcontainers
+- [ ] Full domain model: Reading, Station, Pollutant, GeoPoint, AqiBand
+- [ ] Full schema: stations, readings, users, devices, alert_rules, alert_events, location_pings
 
-## Phase 0 — Setup & baseline
-Status: In progress
-- [x] JDK, IntelliJ, Docker Desktop, Maven installed
-- [x] Repo initialized, .gitignore in place
-- [ ] MIT licence
-- [ ] README with real problem statement (currently a bare stub)
-- [ ] Branch protection on main / PR workflow
-- [ ] ADR template in /docs/adr/
-- [ ] Gate 0 — NOT attempted
+## 1. Ingest
+- [ ] REST endpoint for community devices to POST readings
+- [ ] Scheduled pull from public APIs (OpenAQ / WAQI / sensor.community)
+- [ ] Simulated device fleet / load generator
 
-## Phase 1 — Core Java that actually matters
-Status: Not started
-Note: running in parallel via Udemy Java Masterclass — check course progress before attempting Gate 1, some of this may already be covered.
+## 2. Validate & calibrate
+- [ ] Range checks, future-timestamp rejection, duplicate detection
+- [ ] Stuck-sensor detection
+- [ ] Drift correction against reference stations
 
-## Phase 2 — Concurrency & the JVM
-Status: Not started
+## 3. Store
+- [ ] Raw readings with retention policy
+- [ ] Hourly/daily rollups
 
-## Phase 3 — Spring Core & Boot internals
-Status: In progress (out of sequence)
-- [x] Spring Boot app running (Maven, Java 21, Spring Boot 4.1.1)
-- [x] GET /api/health endpoint
-- [ ] Domain model converted from Phase 1 (blocked on Phase 1)
-- [ ] @ConfigurationProperties for thresholds/limits/keys
-- [ ] dev/prod profiles
-- [ ] Custom autoconfiguration + starter
-- [ ] Gate 3 — NOT attempted
-Note: this is infrastructure scaffolding, not a real Phase 3 attempt. Jumped ahead for practical reasons (needed a running app before most other work made sense).
+## 4. Serve (REST API)
+- [ ] Current conditions near a coordinate
+- [ ] Historical series
+- [ ] Station metadata / rankings
+- [ ] Caching + rate limiting
+- [ ] OpenAPI docs
 
-## Phase 4 — REST API design
-Status: Not started
+## 5. Alert
+- [ ] User-defined zones/thresholds
+- [ ] Threshold evaluation with hysteresis/cooldown
+- [ ] Push notifications
 
-## Phase 5 — Persistence: JPA, Hibernate, SQL
-Status: In progress (out of sequence)
-- [x] Docker Compose: TimescaleDB (pg17) running locally
-- [x] Flyway migration, sensor_reading verified as a real hypertable
-- [x] SensorReading entity (@IdClass) + Spring Data repository
-- [ ] Full schema (stations, users, devices, alert_rules, alert_events, location_pings)
-- [ ] Rollup tables / continuous aggregates
-- [ ] Radius/spatial queries
-- [ ] N+1 query-count regression test
-- [ ] Gate 5 — NOT attempted
-Note: single-table proof of connectivity only. Core JPA/Hibernate concepts (N+1, fetch types, transactions, locking, indexing) not yet covered.
+## 6. Personal exposure
+- [ ] Location ping ingestion
+- [ ] Exposure dose integration over time
+- [ ] Weekly report
 
-## Phase 6 — Security
-Status: Not started
+## 7. Forecast
+- [ ] Baseline persistence model
+- [ ] Diurnal-profile model
+- [ ] Regression model + accuracy comparison
 
-## Phase 7 — Testing & quality
-Status: Barely started
-- [x] One Testcontainers-based repository test (SensorReadingRepositoryTest)
-- [ ] Everything else
+## 8. Live view
+- [ ] SSE/WebSocket real-time stream
 
-## Phase 8 — Async, messaging & caching
-Status: Not started
-
-## Phase 9 — DevOps & observability
-Status: Not started
-
-## Phase 10 — Scale, depth, and finishing
-Status: Not started
-
----
-
-## Honest read
-No gates have been passed yet. Phase 3 and 5 progress above is real but partial — 
-minimum scaffolding to unblock further work, not the phase deliverables. Don't let 
-"app boots" or "one table exists" read as done.
-
-Recommended next real step: attempt Gate 0 (~30-60 min, no help, no lookups). 
-It tells you honestly whether Phase 1 can be skipped, which matters for how you 
-split time against the Udemy course.
+## Cross-cutting (as-needed)
+- [ ] Security (auth, device API keys)
+- [ ] Observability (metrics, dashboard)
+- [ ] Deployment (full Docker Compose stack, CI/CD)

@@ -13,7 +13,7 @@ built and verified, updated after each session.
 
 ## 1. Ingest
 - [ ] REST endpoint for community devices to POST readings
-- [ ] Scheduled pull from public APIs (OpenAQ / WAQI / sensor.community)
+- [x] Scheduled pull from public APIs (OpenAQ / WAQI / sensor.community) — OpenAQ v3 only, single hardcoded location, dedup guard on (sensorId, recordedAt, pollutant); WAQI and sensor.community not wired up yet
 - [ ] Simulated device fleet / load generator
 
 ## 2. Validate & calibrate

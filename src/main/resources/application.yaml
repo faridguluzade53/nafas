@@ -14,3 +14,10 @@ spring:
     open-in-view: false
   flyway:
     enabled: true
+
+nafas:
+  openaq:
+    base-url: https://api.openaq.org/v3
+    api-key: ${OPENAQ_API_KEY:}
+    location-id: 2178   # a placeholder OpenAQ location id; will be made configurable later
+    poll-interval-ms: 300000   # 5 minutes

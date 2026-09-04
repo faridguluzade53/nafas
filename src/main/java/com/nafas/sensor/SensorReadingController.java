@@ -2,6 +2,7 @@ package com.nafas.sensor;
 
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,14 +36,14 @@ public class SensorReadingController {
 	@GetMapping("/api/sensor-readings")
 	public ResponseEntity<List<SensorReadingResponse>> findBySensorId(
 			@RequestParam String sensorId,
+			@RequestParam(required = false) Pollutant pollutant,
 			@RequestParam(required = false, defaultValue = "" + DEFAULT_LIMIT) int limit) {
 		int clampedLimit = Math.max(1, Math.min(limit, MAX_LIMIT));
-		List<SensorReadingResponse> readings = sensorReadingRepository
-				.findBySensorIdOrderByRecordedAtDesc(sensorId, PageRequest.of(0, clampedLimit, Sort.by("recordedAt").descending()))
-				.stream()
-				.map(SensorReadingResponse::from)
-				.toList();
-		return ResponseEntity.ok(readings);
+		Pageable pageable = PageRequest.of(0, clampedLimit, Sort.by("recordedAt").descending());
+		List<SensorReading> readings = pollutant == null
+				? sensorReadingRepository.findBySensorIdOrderByRecordedAtDesc(sensorId, pageable)
+				: sensorReadingRepository.findBySensorIdAndPollutantOrderByRecordedAtDesc(sensorId, pollutant, pageable);
+		return ResponseEntity.ok(readings.stream().map(SensorReadingResponse::from).toList());
 	}
 
 }

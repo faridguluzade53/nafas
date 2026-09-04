@@ -9,4 +9,7 @@ public interface SensorReadingRepository extends JpaRepository<SensorReading, Se
 
 	List<SensorReading> findBySensorIdOrderByRecordedAtDesc(String sensorId, Pageable pageable);
 
+	List<SensorReading> findBySensorIdAndPollutantOrderByRecordedAtDesc(
+			String sensorId, Pollutant pollutant, Pageable pageable);
+
 }

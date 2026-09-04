@@ -36,7 +36,7 @@ class SensorReadingRepositoryTest {
 
     @Test
     void savesAndReadsBackByCompositeKey() {
-        SensorReading reading = new SensorReading("sensor-1", Instant.now(), 42.5);
+        SensorReading reading = new SensorReading("sensor-1", Instant.now(), Pollutant.PM25, 42.5);
 
         SensorReading saved = repository.save(reading);
 
@@ -47,6 +47,7 @@ class SensorReadingRepositoryTest {
 
         assertThat(found).isPresent();
         assertThat(found.get().getSensorId()).isEqualTo("sensor-1");
-        assertThat(found.get().getPm25()).isEqualTo(42.5);
+        assertThat(found.get().getPollutant()).isEqualTo(Pollutant.PM25);
+        assertThat(found.get().getValue()).isEqualTo(42.5);
     }
 }

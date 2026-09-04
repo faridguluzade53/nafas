@@ -27,7 +27,7 @@ public class SensorReadingController {
 
 	@PostMapping("/api/sensor-readings")
 	public ResponseEntity<SensorReadingResponse> create(@Valid @RequestBody CreateSensorReadingRequest request) {
-		SensorReading reading = new SensorReading(request.sensorId(), request.recordedAt(), request.pm25());
+		SensorReading reading = new SensorReading(request.sensorId(), request.recordedAt(), request.pollutant(), request.value());
 		SensorReading saved = sensorReadingRepository.save(reading);
 		return ResponseEntity.status(HttpStatus.CREATED).body(SensorReadingResponse.from(saved));
 	}

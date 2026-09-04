@@ -2,6 +2,8 @@ package com.nafas.sensor;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,16 +31,21 @@ public class SensorReading {
 	@Column(name = "sensor_id", nullable = false, length = 64)
 	private String sensorId;
 
-	@Column(name = "pm25")
-	private Double pm25;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "pollutant", nullable = false, length = 10)
+	private Pollutant pollutant;
+
+	@Column(name = "value")
+	private Double value;
 
 	protected SensorReading() {
 	}
 
-	public SensorReading(String sensorId, Instant recordedAt, Double pm25) {
+	public SensorReading(String sensorId, Instant recordedAt, Pollutant pollutant, Double value) {
 		this.sensorId = sensorId;
 		this.recordedAt = recordedAt;
-		this.pm25 = pm25;
+		this.pollutant = pollutant;
+		this.value = value;
 	}
 
 	public Long getId() {
@@ -53,8 +60,12 @@ public class SensorReading {
 		return sensorId;
 	}
 
-	public Double getPm25() {
-		return pm25;
+	public Pollutant getPollutant() {
+		return pollutant;
+	}
+
+	public Double getValue() {
+		return value;
 	}
 
 }

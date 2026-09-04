@@ -6,7 +6,8 @@ public record SensorReadingResponse(
 		Long id,
 		String sensorId,
 		Instant recordedAt,
-		Double pm25
+		Pollutant pollutant,
+		Double value
 ) {
 
 	public static SensorReadingResponse from(SensorReading reading) {
@@ -14,7 +15,8 @@ public record SensorReadingResponse(
 				reading.getId(),
 				reading.getSensorId(),
 				reading.getRecordedAt(),
-				reading.getPm25()
+				reading.getPollutant(),
+				reading.getValue()
 		);
 	}
 

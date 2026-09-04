@@ -9,6 +9,7 @@ import java.time.Instant;
 public record CreateSensorReadingRequest(
 		@NotBlank String sensorId,
 		@NotNull Instant recordedAt,
-		@NotNull @PositiveOrZero Double pm25
+		@NotNull Pollutant pollutant,
+		@NotNull @PositiveOrZero Double value
 ) {
 }

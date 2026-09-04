@@ -1,0 +1,3 @@
+ALTER TABLE sensor_reading RENAME COLUMN pm25 TO value;
+ALTER TABLE sensor_reading ADD COLUMN pollutant VARCHAR(10) NOT NULL DEFAULT 'PM25';
+ALTER TABLE sensor_reading ALTER COLUMN pollutant DROP DEFAULT;
